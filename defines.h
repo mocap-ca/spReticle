@@ -48,7 +48,7 @@
 #define EPSILON                 0.0000001
 
 // Define whether to source a MEL script upon instantiation, and if so, which script in the script path
-#define SOURCE_MEL_SCRIPT       true
+#define SOURCE_MEL_SCRIPT       1
 #define SOURCE_MEL_SCRIPT_PATH  "spReticleLoc.mel"
 #define SOURCE_MEL_METHOD       "spReticleLocSetDefault"
 
@@ -73,6 +73,10 @@
 // Currently, it has proper draw-order integration with image planes and support for DX11.
 // Cons are that it is slower, fonts are aliased, and line rendering is sometimes occluded by masks.
 // This only impacts Viewport 2.0.  Viewport 1.0 will use the OpenGLRenderer regardless.
-#define USE_MUIDRAWMANAGER      false 
+#define USE_MUIDRAWMANAGER      0 
+
+#ifdef _WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #endif

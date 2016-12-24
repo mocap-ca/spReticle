@@ -1575,7 +1575,7 @@ bool spReticleLoc::prepForDraw(const MObject & node, const MDagPath & path, cons
         p = MPlug ( thisNode, Tag );
         McheckStatus ( p.getValue ( tag  ), "spReticleLoc::draw get tag");
         
-        MString cmd = "if (exists(\"" SOURCE_MEL_METHOD "\")) "SOURCE_MEL_METHOD"(\""+path.partialPathName()+"\",\""+tag+"\")";
+        MString cmd = "if (exists(\"" + MString(SOURCE_MEL_METHOD) + "\")) "" + MString(SOURCE_MEL_METHOD) + ""(\""+path.partialPathName()+"\",\""+tag+"\")";
         MGlobal::executeCommand(cmd);
         loadDefault = false;
     }

@@ -42,6 +42,12 @@
 #ifndef spReticle_OpenGLRenderer_h
 #define spReticle_OpenGLRenderer_h
 
+#ifdef _WIN32
+#define NOMINMAX
+#include <Windows.h>
+#include <algorithm> 
+#endif
+
 #include <iostream>
 #include <map>
 #include <stdlib.h>

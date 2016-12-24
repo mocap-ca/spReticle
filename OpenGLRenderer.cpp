@@ -43,6 +43,8 @@
 
 #include "OpenGLRenderer.h"
 
+#include <vector>
+
 OpenGLRenderer::OpenGLRenderer()
 {
      // Populate fontMap
@@ -71,7 +73,7 @@ OpenGLRenderer::OpenGLRenderer()
          }
          
          // Populate glyphMap based on wchar_t
-         for (unsigned int glyphIndex = 0; glyphIndex < font->glyphs_count;glyphIndex++) {
+         for (int glyphIndex = 0; glyphIndex < font->glyphs_count;glyphIndex++) {
              TextureGlyph *glyph = &font->glyphs[glyphIndex];
              font->glyphMap[glyph->charcode] = glyph;
          }
@@ -270,8 +272,11 @@ void OpenGLRenderer::drawText(TextData *td, double tx, double ty)
     float textHeight = 0.0f;
     int numChars = wcslen(textPtr);
     
-    TextureGlyph *glyphs[numChars];
-    double kerning[numChars];
+	std::vector<TextureGlyph *> glyphs;
+	glyphs.resize(numChars);
+
+	std::vector<double> kerning;
+	kerning.resize(numChars);
     
     for (int i = 0; i < numChars; i++) {
         GlyphMap::iterator it = font->glyphMap.find(textPtr[i]);
@@ -287,7 +292,7 @@ void OpenGLRenderer::drawText(TextData *td, double tx, double ty)
         
         if (i > 0 && glyph->kerning_count) {
             double kernAmount = 0;
-            for(unsigned int kernIndex =0; kernIndex < glyph->kerning_count; kernIndex++) {
+            for( int kernIndex =0; kernIndex < glyph->kerning_count; kernIndex++ ) {
                 if (glyph->kerning[kernIndex].charcode == textPtr[i-1] ) {
                     kernAmount = glyph->kerning[kernIndex].kerning;
                     break;
@@ -353,7 +358,7 @@ void OpenGLRenderer::drawText(TextData *td, double tx, double ty)
 // Make sure everything is ready for text drawing
 void OpenGLRenderer::enableTextRendering() {
     // Enable GL textures
-    glEnable( GL_TEXTURE_2D );
+    
     
     if (!fontAtlas.id) {
         glGenTextures( 1, &fontAtlas.id );
@@ -361,15 +366,22 @@ void OpenGLRenderer::enableTextRendering() {
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
+#ifdef GL_GENERATE_MIPMAP
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
         
         //Generate the texture with mipmaps
         glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-        
+#else
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+#endif
+
         glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, fontAtlas.width, fontAtlas.height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, fontAtlas.data );
     }
     
     glBindTexture( GL_TEXTURE_2D, fontAtlas.id );
+
+	glEnable( GL_TEXTURE_2D );
 }
 
 // Turn off text rendering
