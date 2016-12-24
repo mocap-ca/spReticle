@@ -308,11 +308,13 @@ MMatrix spReticleLoc::getMatrix(MString matrixStr)
 //
 void spReticleLoc::printAspectRatio(Aspect_Ratio & ar)
 {
+/*
     cerr << "-------------------------------------------------" << endl;
     cerr << "aspect ratio      : " << ar.aspectRatio << endl;
     cerr << "displayMode       : " << ar.displayMode << endl;
     cerr << "maskColor         : " << ar.aspectGeom.maskColor << endl;
     cerr << "lineColor         : " << ar.aspectGeom.lineColor << endl;
+*/
 }
 
 // This method outputs to cerr the attributes of an PanScan class instance.
@@ -331,14 +333,14 @@ void spReticleLoc::printPanScan(PanScan & ps)
 //
 void spReticleLoc::printText(TextData & td)
 {
-    cerr << "-------------------------------------------------" << endl;
+   /* cerr << "-------------------------------------------------" << endl;
     cerr << "text type         : " << td.textType << endl;
     cerr << "text string       : " << td.textStr << endl;
     cerr << "text align        : " << td.textAlign << endl;
     cerr << "text pos          : " << td.textPosX << ", " << td.textPosY << endl;
     cerr << "text pos rel      : " << td.textPosRel << endl;
     cerr << "text level        : " << td.textLevel << endl;
-    cerr << "text ar level     : " << td.textARLevel << endl;
+    cerr << "text ar level     : " << td.textARLevel << endl;*/
 }
 
 // This method outputs to cerr the attributes of an Geom class instance.
@@ -352,8 +354,8 @@ void spReticleLoc::printGeom(Geom & g)
     cerr << "x2 : " << g.x2 << endl;
     cerr << "y1 : " << g.y1 << endl;
     cerr << "y2 : " << g.y2 << endl;
-    cerr << "mc : " << g.maskColor << endl;
-    cerr << "lc : " << g.lineColor << endl;
+    //cerr << "mc : " << g.maskColor << endl;
+    //cerr << "lc : " << g.lineColor << endl;
     cerr << "iv : " << g.isValid << endl;
 }
 
