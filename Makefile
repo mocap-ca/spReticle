@@ -2,6 +2,8 @@
 
 UNAME = $(shell uname)
 
+MAYA_VERSION = 2014
+
 ##################################
 # Platform specific build settings
 ##################################
@@ -21,7 +23,7 @@ C++FLAGS      = $(CFLAGS) -Wno-deprecated -fno-gnu-keywords
 LD            = $(C++) $(NO_TRANS_LINK) $(C++FLAGS) -Wl,-Bsymbolic -shared
 INCLUDES      = -I. -I$(MAYA_LOCATION)/include -I/opt/X11/include
 DEBUGFLAGS    = -g -gstabs+
-TARGET        = spReticle.so
+TARGET        = spReticle_$(MAYA_VERSION).so
 
 # OSX
 else
@@ -37,10 +39,10 @@ CFLAGS        =  -D_BOOL -DREQUIRE_IOSTREAM  -DOSMac_ -DOSMac_MachO_ \
 C++FLAGS      = $(CFLAGS) 
 LD            =  $(C++) -bundle -framework AGL -framework OpenGL  \
     #-F/System/Library/Frameworks
-MAYA_LOCATION = /Applications/Autodesk/maya2014
+MAYA_LOCATION = /Applications/Autodesk/maya$(MAYA_VERSION)
 INCLUDES      = -I. -I$(MAYA_LOCATION)/devkit/include/  
 DEBUGFLAGS    = -g
-TARGET        = spReticle.bundle
+TARGET        = spReticle_$(MAYA_VERSION).bundle
 
 LIBS          = -L$(MAYA_LOCATION)/Maya.app/Contents/MacOS \
                         -lOpenMayaRender -lOpenMayaUI -lOpenMaya -lFoundation -lOpenMayaAnim
