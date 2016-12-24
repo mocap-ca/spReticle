@@ -34,10 +34,10 @@ CFLAGS        =  -D_BOOL -DREQUIRE_IOSTREAM  -DOSMac_ -DOSMac_MachO_ \
      -mmacosx-version-min=10.9  -Wno-switch-enum -Wno-switch \
      -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/$(DEVSDK) \
      -Wno-switch-enum -Wno-switch -DLTC_NO_ASM \
-   # -stdlib=libstdc++ #-lstdc++ #-std=c++0x
+    -stdlib=libstdc++
 
 C++FLAGS      = $(CFLAGS) 
-LD            =  $(C++) -bundle -framework AGL -framework OpenGL  \
+LD            =  $(C++) $(CFLAGS) -bundle -framework AGL -framework OpenGL  \
     #-F/System/Library/Frameworks
 MAYA_LOCATION = /Applications/Autodesk/maya$(MAYA_VERSION)
 INCLUDES      = -I. -I$(MAYA_LOCATION)/devkit/include/  
