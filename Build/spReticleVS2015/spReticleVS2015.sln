@@ -8,6 +8,7 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		d2017|x64 = d2017|x64
+		d2018|x64 = d2018|x64
 		r2016|x64 = r2016|x64
 		r2017|x64 = r2017|x64
 		r2018|x64 = r2018|x64
@@ -15,6 +16,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{80359A84-1D93-4EFC-923F-FE467B73E943}.d2017|x64.ActiveCfg = d2017|x64
 		{80359A84-1D93-4EFC-923F-FE467B73E943}.d2017|x64.Build.0 = d2017|x64
+		{80359A84-1D93-4EFC-923F-FE467B73E943}.d2018|x64.ActiveCfg = d2018|x64
+		{80359A84-1D93-4EFC-923F-FE467B73E943}.d2018|x64.Build.0 = d2018|x64
 		{80359A84-1D93-4EFC-923F-FE467B73E943}.r2016|x64.ActiveCfg = r2016|x64
 		{80359A84-1D93-4EFC-923F-FE467B73E943}.r2016|x64.Build.0 = r2016|x64
 		{80359A84-1D93-4EFC-923F-FE467B73E943}.r2017|x64.ActiveCfg = r2017|x64

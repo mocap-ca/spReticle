@@ -5,6 +5,10 @@
       <Configuration>d2017</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="d2018|x64">
+      <Configuration>d2018</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="r2018|x64">
       <Configuration>r2018</Configuration>
       <Platform>x64</Platform>
@@ -50,6 +54,12 @@
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='d2018|x64'" Label="Configuration">
+    <PlatformToolset>v140</PlatformToolset>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -70,6 +80,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='r2018|x64'">
     <Import Project="spReticle.props" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='d2018|x64'" Label="PropertySheets">
+    <Import Project="spReticle.props" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='d2017|x64'">
     <TargetName>spReticle_2017d</TargetName>
@@ -84,6 +97,10 @@
     <TargetExt>.mll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='r2018|x64'">
+    <TargetExt>.mll</TargetExt>
+    <TargetName>spReticle_2018</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='d2018|x64'">
     <TargetExt>.mll</TargetExt>
     <TargetName>spReticle_2018</TargetName>
   </PropertyGroup>
@@ -109,12 +126,12 @@
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <AdditionalIncludeDirectories>C:\cpp\api\Maya\2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\cpp\api\Maya\2017\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\cpp\api\Maya\2017\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\cpp\api\Maya\2017\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='r2016|x64'">
@@ -126,15 +143,28 @@
       <SDLCheck>true</SDLCheck>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <AdditionalIncludeDirectories>C:\cpp\api\Maya\2016_64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\cpp\api\Maya\2016\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\cpp\api\Maya\2016_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\cpp\api\Maya\2016\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='r2018|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\cpp\api\maya\2018\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <Optimization>Disabled</Optimization>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>E:\cpp\api\maya\2018\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='d2018|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>E:\cpp\api\maya\2018\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>

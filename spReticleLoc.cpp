@@ -1575,7 +1575,7 @@ bool spReticleLoc::prepForDraw(const MObject & node, const MDagPath & path, cons
         p = MPlug ( thisNode, Tag );
         McheckStatus ( p.getValue ( tag  ), "spReticleLoc::draw get tag");
         
-        MString cmd = "if (exists(\"" + MString(SOURCE_MEL_METHOD) + "\")) "" + MString(SOURCE_MEL_METHOD) + ""(\""+path.partialPathName()+"\",\""+tag+"\")";
+        MString cmd = "if (exists(\"" + MString(SOURCE_MEL_METHOD) + "\")) " + MString(SOURCE_MEL_METHOD) + "(\""+path.partialPathName()+"\",\""+tag+"\")";
         MGlobal::executeCommand(cmd);
         loadDefault = false;
     }
@@ -2833,13 +2833,13 @@ spReticleLocDrawOverride::~spReticleLocDrawOverride()
 MHWRender::DrawAPI spReticleLocDrawOverride::supportedDrawAPIs() const
 {
     // this plugin supports both GL and DX
-    return (MHWRender::kOpenGL | MHWRender::kDirectX11);
+    return (MHWRender::kAllDevices);
 }
 #elif (MAYA_API_VERSION>=201300)
 MHWRender::DrawAPI spReticleLocDrawOverride::supportedDrawAPIs() const
 {
     // this plugin supports OpenGL
-    return (MHWRender::kOpenGL);
+    return (MHWRender::kOpenGL | MHWRender::kOpenGLCoreProfile);
 }
 #endif
 
@@ -2916,7 +2916,7 @@ bool spReticleLocDrawOverride::hasUIDrawables() const
 void spReticleLocDrawOverride::addUIDrawables( const MDagPath& objPath, MHWRender::MUIDrawManager& drawManager, const MHWRender::MFrameContext& frameContext, const MUserData* data )
 {
 #if (USE_MUIDRAWMANAGER)
-    //Get the view attributes that impact drawing
+    //Get the view attributes that impact drawing	
     int oX,oy,portWidth,portHeight;
     frameContext.getViewportDimensions(oX,oy,portWidth,portHeight);
 
