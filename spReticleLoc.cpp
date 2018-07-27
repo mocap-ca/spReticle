@@ -79,6 +79,7 @@
 #include <maya/MFileIO.h>
 #include <maya/MFileObject.h>
 #include <maya/MFnMessageAttribute.h>
+#include <maya/MTime.h>
 
 #if (MAYA_API_VERSION>=201200)
 // Viewport 2.0 includes
@@ -1180,26 +1181,64 @@ bool spReticleLoc::calcDynamicText(TextData *td, const int i)
             }
             break;
         case 3:						//Frame
-        {
-            MTime time;
-            MPlug p = MPlug ( thisNode, Time );
-            if (p.isNull() == false && p.isConnected() == false)
-            {
-                MString cmd = "connectAttr time1.o "+p.name();
-                MGlobal::executeCommand(cmd);
-            }
-            
-            MStatus status = p.getValue(time);
-            if (!status)
-            {
-                status.perror("spReticleLoc::calcDynamicText get time");
-                return false;
-            }
-            
-            if (td->textStr == "")
-                td->textStr = MString("%04.0f");
-            
-            sprintf(buff,td->textStr.asChar(),time.value() );
+		case 21:                    //Timecode
+		case 22:                    //Timecode drop frame
+		{
+			MTime time;
+			MPlug p = MPlug(thisNode, Time);
+			if (p.isNull() == false && p.isConnected() == false)
+			{
+				MString cmd = "connectAttr time1.o " + p.name();
+				MGlobal::executeCommand(cmd);
+			}
+
+			MStatus status = p.getValue(time);
+			if (!status)
+			{
+				status.perror("spReticleLoc::calcDynamicText get time");
+				return false;
+			}
+
+			if (td->textStr == "")
+				td->textStr = MString("%04.0f");
+
+			if (td->textType == 3)
+			{
+				sprintf(buff, td->textStr.asChar(), time.value());
+			}
+			if (td->textType == 21 || td->textType == 22)
+			{
+
+				// Convert frame to timecode using ui units.
+				double fps = MTime(1, MTime::kSeconds).asUnits(MTime::uiUnit());
+
+				double total_frames = time.value();
+
+				if (td->textType == 22)
+				{
+					float D = total_frames / 17982;
+					float M = int(total_frames) % 17982;
+					total_frames += 18 * D + 2 * ((M - 2) / 1798);
+				}
+
+				float frames = fmod(total_frames, fps);
+
+				int n = (total_frames / fps);
+				int seconds = n % 60;
+				n -= seconds;
+				n /= 60;
+
+				int minutes = n % 60;
+				n -= minutes;
+				n /= 60;
+					
+				int hours = n % 60;
+
+				if (td->textType == 22)
+					sprintf(buff, "%02d:%02d:%02d;%02d", hours, minutes, seconds, int(frames));  // Semicolon before frame#
+				else
+					sprintf(buff, "%02d:%02d:%02d:%02d", hours, minutes, seconds, int(frames));
+			}
             td->textStr = MString(buff);
             break;
         }
@@ -1360,6 +1399,7 @@ bool spReticleLoc::calcDynamicText(TextData *td, const int i)
             if (td->textStr == "")
                 td->textStr = "safe title";
             break;
+
         default:
             MGlobal::displayError( name() + " invalid text type for text item " + i);
             return false;
@@ -2425,9 +2465,11 @@ MStatus spReticleLoc::initialize()
     eAttr.addField("File Name",16);
     eAttr.addField("Pan/Scan Aspect Ratio",17);
     eAttr.addField("Pan/Scan Offset",18);
-    eAttr.addField("safe action",19);
-    eAttr.addField("safe title",20);
-    eAttr.setInternal(true);
+    eAttr.addField("Safe Action",19);
+    eAttr.addField("Safe Title",20);
+	eAttr.addField("Timecode", 21);
+	eAttr.addField("Timecode Drop Frame", 22);
+	eAttr.setInternal(true);
 
     TextStr = tAttr.create( "textStr", "tstr", MFnStringData::kString );
     McheckStatus(stat,"create textStr attribute");
